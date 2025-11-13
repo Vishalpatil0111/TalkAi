@@ -144,18 +144,6 @@ You can generate a key here:
 
 ---
 
-## 🔥 **Screenshots**
-
-(Add screenshots here)
-
-```
-📸 /screenshots/home.png  
-📸 /screenshots/chat.png  
-📸 /screenshots/mobile.png  
-```
-
----
-
 ## 🧩 **Future Enhancements**
 
 * Streaming AI responses (typing effect)
