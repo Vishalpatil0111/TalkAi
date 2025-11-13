@@ -1,0 +1,61 @@
+
+@import "tailwindcss";
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: poppins;
+}
+/* 🌌 Beautiful neon-gradient animated background */
+.bg-animated {
+  background: radial-gradient(circle at 20% 20%, rgba(50,50,80,1), rgba(15,15,20,1)),
+              radial-gradient(circle at 80% 80%, rgba(25,25,50,1), rgba(0,0,0,1));
+  background-size: 200% 200%;
+  animation: bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.6;
+  animation: float 12s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-40px) translateX(20px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* Neon pulse animation for AI messages */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 8px rgba(0, 150, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 200, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(0, 150, 255, 0.4);
+  }
+}
+
+.ai-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
