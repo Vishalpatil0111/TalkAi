@@ -32,29 +32,40 @@ export default function Sidebar({ onChatSelect, onClose }) {
       bg-black/40 backdrop-blur-xl 
       border-r border-white/10
     ">
- 
+
       <div className="flex items-center justify-between p-4 border-b border-white/10">
+
         <h2 className="font-bold text-lg">All Chats</h2>
 
+        {/* Right side buttons */}
         <div className="flex gap-2 items-center">
+
+          {/* New Chat (always visible) */}
           <button
             onClick={createNewSession}
-            className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition hidden md:block"
+            className="
+        bg-blue-600 text-white px-3 py-1 rounded text-sm 
+        hover:bg-blue-700 transition
+      "
           >
-            + New Chat
+            + New
           </button>
 
-        
+          {/* Close (mobile only) */}
           <button
             onClick={onClose}
-            className="md:hidden text-gray-300 hover:text-white p-2 rounded"
+            className="
+        md:hidden 
+        text-gray-300 hover:text-white p-2 rounded
+      "
           >
             ✕
           </button>
+
         </div>
       </div>
 
-     
+
       <div className="flex-1 overflow-y-auto">
         {sessions.length === 0 && (
           <div className="text-white p-4 text-sm">
@@ -67,9 +78,9 @@ export default function Sidebar({ onChatSelect, onClose }) {
             key={chat.id}
             className={`group flex items-center justify-between m-2 p-3 rounded-md cursor-pointer transition
             ${chat.id === activeSessionId
-              ? "bg-white text-black font-semibold shadow-lg"
-              : "hover:bg-white/10"
-            }
+                ? "bg-white text-black font-semibold shadow-lg"
+                : "hover:bg-white/10"
+              }
           `}
           >
             {/* Chat title */}
@@ -103,7 +114,7 @@ export default function Sidebar({ onChatSelect, onClose }) {
               )}
             </div>
 
-           
+
             <div
               className="
                 flex items-center gap-3 
