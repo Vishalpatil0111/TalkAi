@@ -65,38 +65,34 @@ export default function ChatWindow() {
     setPendingEdit({ index, newText });
   };
 
-  useEffect(() => {
-    
-    if (!pendingEdit) return;
+ useEffect(() => {
+  if (!pendingEdit) return;
 
-    const { index, newText } = pendingEdit;
+  const { index, newText } = pendingEdit;
+  const messages = activeSession.messages;
+  const nextIndex = index + 1;
 
-    const messages = activeSession.messages;
+  // delete old AI response
+  if (messages[nextIndex] && messages[nextIndex].sender === "ai") {
+    deleteMessage(activeSessionId, nextIndex);
+  }
 
-    const nextIndex = index + 1;
+  const regenerate = async () => {
+    setIsTyping(true);
 
-   
-    if (messages[nextIndex] && messages[nextIndex].sender === "ai") {
-      deleteMessage(activeSessionId, nextIndex);
+    try {
+      const aiText = await getAIResponse(newText);
+      addMessage(activeSessionId, "ai", aiText);
+    } catch (err) {
+      addMessage(activeSessionId, "ai", "Error regenerating response.", true);
     }
 
-   
-    const regenerate = async () => {
-      setIsTyping(true);
+    setIsTyping(false);
+    setPendingEdit(null);
+  };
 
-      try {
-        const aiText = await getAIResponse(newText);
-        addMessage(activeSessionId, "ai", aiText);
-      } catch (err) {
-        addMessage(activeSessionId, "ai", "Error regenerating response.", true);
-      }
-
-      setIsTyping(false);
-      setPendingEdit(null);
-    };
-
-    regenerate();
-  }, [pendingEdit, activeSession]);
+  regenerate();
+}, [pendingEdit]); 
 
 
 
