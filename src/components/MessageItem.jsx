@@ -34,14 +34,13 @@ export default function MessageItem({ sender, text, timestamp, error, onRetry,on
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} w-full`}>
       <div
-        className={`max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed shadow-lg 
+        className={`relative max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed shadow-lg 
         ${bubbleStyle} ${errorStyle}
         ${isUser ? "rounded-br-none" : "rounded-bl-none"}
         `}
       >
 
-        {/* TEXT */}
-        {/* EDIT MODE */}
+       
         {isEditing ? (
           <div className="flex flex-col gap-2">
             <textarea

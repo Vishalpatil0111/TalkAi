@@ -32,7 +32,7 @@ export default function Sidebar({ onChatSelect, onClose }) {
       bg-black/40 backdrop-blur-xl 
       border-r border-white/10
     ">
-      {/* Header */}
+ 
       <div className="flex items-center justify-between p-4 border-b border-white/10">
         <h2 className="font-bold text-lg">All Chats</h2>
 
@@ -44,7 +44,7 @@ export default function Sidebar({ onChatSelect, onClose }) {
             + New Chat
           </button>
 
-          {/* Mobile Close Button */}
+        
           <button
             onClick={onClose}
             className="md:hidden text-gray-300 hover:text-white p-2 rounded"
@@ -54,7 +54,7 @@ export default function Sidebar({ onChatSelect, onClose }) {
         </div>
       </div>
 
-      {/* Chat List */}
+     
       <div className="flex-1 overflow-y-auto">
         {sessions.length === 0 && (
           <div className="text-white p-4 text-sm">
@@ -103,7 +103,7 @@ export default function Sidebar({ onChatSelect, onClose }) {
               )}
             </div>
 
-            {/* Action buttons */}
+           
             <div
               className="
                 flex items-center gap-3 

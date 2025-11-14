@@ -17,7 +17,7 @@ export default function ChatWindow() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // ✅ SEND MESSAGE
+  // SEND MESSAGE
   const handleSend = async (message) => {
     if (!message.trim() || !activeSessionId) return;
 
@@ -34,7 +34,7 @@ export default function ChatWindow() {
     setIsTyping(false);
   };
 
-  // ✅ RETRY FAILED MESSAGE
+  // RETRY message
   const handleRetry = async (failedMessage) => {
     const userPrompt =
       activeSession.messages[
@@ -58,30 +58,29 @@ export default function ChatWindow() {
   const [pendingEdit, setPendingEdit] = useState(null);
 
   const handleEdit = async (index, newText) => {
-    // update user message
+   
     editMessage(activeSessionId, index, newText);
 
-    // store what we need for regeneration
+
     setPendingEdit({ index, newText });
   };
 
   useEffect(() => {
-    // Only run when we have an edit waiting
+    
     if (!pendingEdit) return;
 
     const { index, newText } = pendingEdit;
 
-    // we now use the UPDATED activeSession.messages (React has re-rendered!)
     const messages = activeSession.messages;
 
     const nextIndex = index + 1;
 
-    // delete old AI response if exists
+   
     if (messages[nextIndex] && messages[nextIndex].sender === "ai") {
       deleteMessage(activeSessionId, nextIndex);
     }
 
-    // regenerate AI response
+   
     const regenerate = async () => {
       setIsTyping(true);
 
@@ -93,14 +92,14 @@ export default function ChatWindow() {
       }
 
       setIsTyping(false);
-      setPendingEdit(null); // clear pending state
+      setPendingEdit(null);
     };
 
     regenerate();
   }, [pendingEdit, activeSession]);
 
 
-  // 🔽 Auto-scroll
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [activeSession?.messages?.length, isTyping]);
@@ -114,17 +113,17 @@ export default function ChatWindow() {
 
   return (
     <div className="flex flex-col h-full text-white">
-      {/* HEADER */}
+  
       <div className="p-4 font-semibold text-white">
         {activeSession.title}
       </div>
 
-      {/* MESSAGES */}
+      
       <div className="flex-1 overflow-y-auto p-4 min-h-0">
         <MessageList
           messages={activeSession.messages}
           onRetry={handleRetry}
-          onEdit={handleEdit}     // 👈 ADD THIS
+          onEdit={handleEdit}     
         />
 
         {isTyping && (
@@ -136,7 +135,7 @@ export default function ChatWindow() {
         <div ref={messagesEndRef}></div>
       </div>
 
-      {/* INPUT */}
+    
       <div className="p-3">
         <MessageInput onSend={handleSend} />
       </div>
