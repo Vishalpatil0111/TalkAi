@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
-import { Pencil, Trash2, Download } from "lucide-react"; // for icons
+import { Pencil, Trash2, Download } from "lucide-react";
 import { downloadJSON } from "../utils/downloadJSON";
 
-export default function Sidebar({ onChatSelect ,onClose }) {
+export default function Sidebar({ onChatSelect, onClose }) {
   const {
     sessions,
     activeSessionId,
@@ -18,7 +18,6 @@ export default function Sidebar({ onChatSelect ,onClose }) {
 
   const handleChatClick = (id) => {
     setActiveSession(id);
-
     if (window.innerWidth < 768 && onChatSelect) onChatSelect();
   };
 
@@ -28,23 +27,31 @@ export default function Sidebar({ onChatSelect ,onClose }) {
   };
 
   return (
-    <div className="h-full flex flex-col text-white ">
+    <div className="
+      h-full flex flex-col text-white 
+      bg-black/40 backdrop-blur-xl 
+      border-r border-white/10
+    ">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800">
+      <div className="flex items-center justify-between p-4 border-b border-white/10">
         <h2 className="font-bold text-lg">All Chats</h2>
-        <button
-          onClick={createNewSession}
-          className="bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600 transition"
-        >
-          + New Chat
-        </button>
 
-        <button
-          onClick={onClose}
-          className="md:hidden text-gray-300 hover:text-white p-2 rounded"
-        >
-          ✕
-        </button>
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={createNewSession}
+            className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition hidden md:block"
+          >
+            + New Chat
+          </button>
+
+          {/* Mobile Close Button */}
+          <button
+            onClick={onClose}
+            className="md:hidden text-gray-300 hover:text-white p-2 rounded"
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {/* Chat List */}
@@ -58,13 +65,15 @@ export default function Sidebar({ onChatSelect ,onClose }) {
         {sessions.map((chat) => (
           <div
             key={chat.id}
-            className={`group flex items-center justify-between m-2 p-3 rounded-md cursor-pointer transition ${chat.id === activeSessionId
-              ? "bg-zinc-50 text-black font-medium"
-              : "hover:bg-zinc-700"
-              }`}
+            className={`group flex items-center justify-between m-2 p-3 rounded-md cursor-pointer transition
+            ${chat.id === activeSessionId
+              ? "bg-white text-black font-semibold shadow-lg"
+              : "hover:bg-white/10"
+            }
+          `}
           >
-            {/* Chat Title */}
-            <div className="flex-1 text-center">
+            {/* Chat title */}
+            <div className="flex-1 text-left">
               {editingId === chat.id ? (
                 <input
                   value={tempTitle}
@@ -74,7 +83,11 @@ export default function Sidebar({ onChatSelect ,onClose }) {
                     e.key === "Enter" ? handleRename(chat.id) : null
                   }
                   autoFocus
-                  className="w-full bg-zinc-800 text-white border border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="
+                    w-full bg-black/40 text-white 
+                    border border-white/20 rounded px-2 py-1 
+                    focus:outline-none focus:ring-1 focus:ring-blue-500
+                  "
                 />
               ) : (
                 <div
@@ -83,15 +96,21 @@ export default function Sidebar({ onChatSelect ,onClose }) {
                     setEditingId(chat.id);
                     setTempTitle(chat.title);
                   }}
-                  className="truncate "
+                  className="truncate"
                 >
                   {chat.title}
                 </div>
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
+            {/* Action buttons */}
+            <div
+              className="
+                flex items-center gap-3 
+                opacity-100 md:opacity-0 md:group-hover:opacity-100 
+                transition
+              "
+            >
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -103,6 +122,7 @@ export default function Sidebar({ onChatSelect ,onClose }) {
               >
                 <Pencil size={16} />
               </button>
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -118,22 +138,18 @@ export default function Sidebar({ onChatSelect ,onClose }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-
-                  const sessionData = {
+                  downloadJSON(`${chat.title}.json`, {
                     id: chat.id,
                     title: chat.title,
                     createdAt: chat.createdAt,
                     messages: chat.messages,
-                  };
-
-                  downloadJSON(`${chat.title}.json`, sessionData);
+                  });
                 }}
                 className="hover:text-green-400"
-                title="Download Chat"
+                title="Download"
               >
                 <Download size={16} />
               </button>
-
             </div>
           </div>
         ))}
